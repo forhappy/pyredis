@@ -39,6 +39,7 @@ typedef struct {
 static void RedisContext_dealloc(RedisContext *self)
 {
 	Py_BEGIN_ALLOW_THREADS
+	redisFree(self->_rContext);
 	_XDECREF(self->_rContext);
 	Py_END_ALLOW_THREADS
 
@@ -59,6 +60,7 @@ static int RedisContext_init(RedisContext *self, PyObject *args, PyObject *kwds)
 {
 	if (self->_rContext) {
 		Py_BEGIN_ALLOW_THREADS
+		redisFree(self->_rContext);
 		_XDECREF(self->_rContext);
 		Py_END_ALLOW_THREADS
 
